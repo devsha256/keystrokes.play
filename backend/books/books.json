@@ -1,0 +1,82 @@
+[
+  {
+    "id": "3418968a-df66-4c9c-8b6f-49cca2638c33",
+    "title": "The Flinch",
+    "description": "Julien Smith is a New York Times bestselling author and speaker who has been\r\ninvolved in organizing online communities for over 15 years, from early BBSes and\r\nflashmobs to the social web as we know it today.\r\nAlong with being the co-author of Trust Agents, one of the social web’s most recognized\r\nbooks, he is a contributor to publications such as GQ, Sirius Satellite Radio,\r\nCosmopolitan, the CBC, and more.\r\nJulien's work is often about leaning into discomfort and pain, into self-examination and\r\ndiscpline, intending both to provoke and unbalance. The lessons from The Flinch came\r\nfrom self-defense professionals, security experts, weightlifters, parkour practitioners,\r\nand more.",
+    "thumbnailUrl": "/books/3418968a-df66-4c9c-8b6f-49cca2638c33/cover.png",
+    "createdAt": "2025-12-24T15:08:07.478Z",
+    "updatedAt": "2025-12-24T18:35:21.991Z",
+    "lessons": [
+      {
+        "id": "b9966baa-f099-47ca-b8fe-c106d5a2f472",
+        "title": "INTRODUCTION",
+        "order": 1,
+        "fileName": "01-b9966baa-f099-47ca-b8fe-c106d5a2f472.txt"
+      },
+      {
+        "id": "15245b16-1e60-48fe-af15-8137245da8d8",
+        "title": "THE OPPONENT",
+        "order": 2,
+        "fileName": "02-15245b16-1e60-48fe-af15-8137245da8d8.txt"
+      },
+      {
+        "id": "93c701e4-b8cf-4ef5-a8cf-d234e85cff28",
+        "title": "A LITTLE BACKGROUND",
+        "order": 3,
+        "fileName": "03-93c701e4-b8cf-4ef5-a8cf-d234e85cff28.txt"
+      },
+      {
+        "id": "84dfbe03-988d-4e1d-9fc1-a70a2fdeff5d",
+        "title": "YOUR DEFECTIVE ALARM SYSTEM",
+        "order": 4,
+        "fileName": "04-84dfbe03-988d-4e1d-9fc1-a70a2fdeff5d.txt"
+      },
+      {
+        "id": "4c3052cb-b9de-4a0f-818a-fa314c337fc2",
+        "title": "A LIST OF YOUR TRUE FEARS",
+        "order": 5,
+        "fileName": "05-4c3052cb-b9de-4a0f-818a-fa314c337fc2.txt"
+      }
+    ]
+  },
+  {
+    "id": "706abf36-ec90-4782-9712-e12f623ba844",
+    "title": "Eat That Frog",
+    "description": "There is never enough time to do everything you have to do. You are\r\nliterally swamped with work and personal responsibilities, endless e-mails,\r\nsocial media, projects, stacks of magazines to read, and piles of books you\r\nintend to get to one of these days—as soon as you get caught up.\r\nBut the fact is that you are never going to get caught up. You will never\r\nget on top of your tasks. You will never get far enough ahead to be able to\r\nget to all those e-mails, books, magazines, and leisure-time activities that\r\nyou dream of.\r\nAnd forget about solving your time management problems by becoming\r\nmore productive. No matter how many personal productivity techniques\r\nyou master, there will always be more to do than you can ever accomplish\r\nin the time you have available to you, no matter how much it is.\r\nYou can get control of your time and your life only by changing the way\r\nyou think, work, and deal with the never-ending river of responsibilities that\r\nflows over you each day. You can get control of your tasks and activities\r\nonly to the degree that you stop doing some things and start spending more\r\ntime on the few activities that can really make a difference in your life.\r\nI have studied time management for more than forty years. I have\r\nimmersed myself in the works of Peter Drucker, Alec Mackenzie, Alan\r\nLakein, Stephen Covey, and many, many others. I have read hundreds of\r\nbooks and thousands of articles on personal efficiency and effectiveness.\r\nThis book is the result.\r\nEach time I came across a good idea, I tried it out in my own work and\r\npersonal life. If it worked, I incorporated it into my talks and seminars and\r\ntaught it to others.\r\nGalileo once wrote, “You cannot teach a man anything; you can only\r\nhelp him find it within himself.”\r\nDepending upon your level of knowledge and experience, these ideas\r\nmay sound familiar. This book will bring them to a higher level of\r\nawareness. When you learn and apply these methods and techniques over\r\nand over until they become habits, you will alter the course of your life in a\r\nvery positive way.",
+    "thumbnailUrl": "/books/706abf36-ec90-4782-9712-e12f623ba844/cover-card.jpg",
+    "createdAt": "2025-12-25T11:09:53.855Z",
+    "updatedAt": "2025-12-25T11:23:23.908Z",
+    "lessons": [
+      {
+        "id": "8c7dd4a4-6129-4c7c-81fd-a9dfab49088c",
+        "title": "Introduction > Eat That Frog",
+        "order": 1,
+        "fileName": "01-8c7dd4a4-6129-4c7c-81fd-a9dfab49088c.txt"
+      },
+      {
+        "id": "e3f8b20a-6e56-4929-aa0d-e14707c726fa",
+        "title": "Introduction > The Need To Be Selective",
+        "order": 2,
+        "fileName": "02-e3f8b20a-6e56-4929-aa0d-e14707c726fa.txt"
+      },
+      {
+        "id": "e4c25757-38e8-4cd6-8381-573619118d3a",
+        "title": "Introduction > The Truth about Frogs",
+        "order": 3,
+        "fileName": "03-e4c25757-38e8-4cd6-8381-573619118d3a.txt"
+      },
+      {
+        "id": "68df027a-93a5-4666-8c51-fd6fe6139ee5",
+        "title": "Introduction > Take Action Immediately",
+        "order": 4,
+        "fileName": "04-68df027a-93a5-4666-8c51-fd6fe6139ee5.txt"
+      },
+      {
+        "id": "fd53b131-4787-4965-a50b-9583861992f0",
+        "title": "Introduction > Develop The Habit of Success",
+        "order": 5,
+        "fileName": "05-fd53b131-4787-4965-a50b-9583861992f0.txt"
+      }
+    ]
+  }
+]

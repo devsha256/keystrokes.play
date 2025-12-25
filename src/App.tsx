@@ -1,115 +1,73 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import TextUploader from './components/TextUploader'
-import TypingArea from './components/TypingArea'
-import StatsDisplay from './components/StatsDisplay'
-import { TypingStats } from './types'
+import React from 'react'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { ThemeProvider, CssBaseline, Box, AppBar, Toolbar, Typography, Tabs, Tab, Container } from '@mui/material'
+import KeyboardAltIcon from '@mui/icons-material/KeyboardAlt'
+import EditNoteIcon from '@mui/icons-material/EditNote'
+import SettingsIcon from '@mui/icons-material/Settings'
+import PracticeTab from './components/PracticeTab'
+import CustomTypingTab from './components/CustomTypingTab'
+import SessionPage from './components/SessionPage'
+import AdminTab from './components/AdminTab'
+import theme from './theme'
 
 const App: React.FC = () => {
-  const [textToType, setTextToType] = useState<string>('')
-  const [isTypingStarted, setIsTypingStarted] = useState<boolean>(false)
-  const [isCompleted, setIsCompleted] = useState<boolean>(false)
-  const [finalStats, setFinalStats] = useState<TypingStats | null>(null)
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  const handleTextSubmit = (text: string): void => {
-    setTextToType(text)
-    setIsTypingStarted(false)
-    setIsCompleted(false)
-    setFinalStats(null)
+  // Determine active tab index based on path
+  const currentPath = location.pathname
+  let tabValue = 0
+  if (currentPath === '/') tabValue = 0
+  else if (currentPath === '/custom') tabValue = 1
+  else if (currentPath.startsWith('/admin')) tabValue = 2
+  else tabValue = -1 // Hide tabs if on session page or unknown
+
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
+    if (newValue === 0) navigate('/')
+    else if (newValue === 1) navigate('/custom')
+    else if (newValue === 2) navigate('/admin')
   }
 
-  const handleStart = (): void => {
-    if (textToType.trim()) {
-      setIsTypingStarted(true)
-      setIsCompleted(false)
-    }
-  }
-
-  const handleComplete = (stats: TypingStats): void => {
-    setIsCompleted(true)
-    setFinalStats(stats)
-  }
-
-  const handleReset = (): void => {
-    setTextToType('')
-    setIsTypingStarted(false)
-    setIsCompleted(false)
-    setFinalStats(null)
-  }
+  // Hide Navbar on session page for immersiveness
+  const isSession = currentPath === '/session'
 
   return (
-    <div className="app-container">
-      <motion.div 
-        className="header"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h1>Typing Portal</h1>
-        <p>Test your typing speed and accuracy</p>
-      </motion.div>
-
-      <AnimatePresence mode="wait">
-        {!isTypingStarted && !isCompleted && (
-          <motion.div
-            key="uploader"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.4 }}
-          >
-            <div className="card">
-              <TextUploader onTextSubmit={handleTextSubmit} />
-              {textToType && (
-                <motion.button
-                  className="button"
-                  onClick={handleStart}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Start Typing Test
-                </motion.button>
-              )}
-            </div>
-          </motion.div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.default' }}>
+        {!isSession && (
+          <AppBar position="static" color="transparent" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Toolbar>
+              <Typography variant="h5" component="div" sx={{ flexGrow: 0, mr: 4, background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)', backgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 'bold' }}>
+                Typing Portal
+              </Typography>
+              <Tabs value={tabValue !== -1 ? tabValue : false} onChange={handleTabChange} aria-label="nav tabs">
+                <Tab icon={<KeyboardAltIcon />} label="Practice" iconPosition="start" />
+                <Tab icon={<EditNoteIcon />} label="Custom" iconPosition="start" />
+                <Tab icon={<SettingsIcon />} label="Admin" iconPosition="start" />
+              </Tabs>
+            </Toolbar>
+          </AppBar>
         )}
 
-        {isTypingStarted && !isCompleted && (
-          <motion.div
-            key="typing"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="card">
-              <TypingArea
-                referenceText={textToType}
-                onComplete={handleComplete}
-                onReset={handleReset}
-              />
-            </div>
-          </motion.div>
+        {isSession ? (
+          <Routes>
+            <Route path="/session" element={<SessionPage />} />
+          </Routes>
+        ) : (
+          <Container component="main" maxWidth="xl" sx={{ flexGrow: 1, py: 4, display: 'flex', flexDirection: 'column' }}>
+            <Routes>
+              <Route path="/" element={<PracticeTab />} />
+              <Route path="/custom" element={<CustomTypingTab />} />
+              <Route path="/admin" element={<AdminTab />} />
+              <Route path="/session" element={<SessionPage />} />
+            </Routes>
+          </Container>
         )}
-
-        {isCompleted && finalStats && (
-          <motion.div
-            key="stats"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.6, type: 'spring' }}
-          >
-            <div className="card">
-              <StatsDisplay stats={finalStats} onReset={handleReset} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+      </Box>
+    </ThemeProvider>
   )
 }
+
 
 export default App

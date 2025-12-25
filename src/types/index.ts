@@ -29,6 +29,8 @@ export interface TypingAreaProps {
   referenceText: string
   onComplete: (stats: TypingStats) => void
   onReset: () => void
+  onStatsUpdate?: (stats: { wpm: number; accuracy: number; totalErrors: number; progress: number }) => void
+  simpleMode?: boolean
 }
 
 export interface StatsDisplayProps {
@@ -42,3 +44,28 @@ export interface ErrorIndicatorProps {
 }
 
 export type PerformanceGrade = 'A+' | 'A' | 'B' | 'C' | 'D' | 'F'
+
+export interface ValidationResult {
+  isValid: boolean
+  message: string
+  normalizedLength: number
+  wordCount: number
+  issues: string[]
+}
+
+export interface Lesson {
+  id: string
+  title: string
+  order: number
+  fileName?: string
+}
+
+export interface Book {
+  id: string
+  title: string
+  description: string
+  thumbnailUrl?: string
+  createdAt: string
+  updatedAt: string
+  lessons: Lesson[]
+}

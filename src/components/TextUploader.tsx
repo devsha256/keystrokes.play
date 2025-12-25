@@ -1,27 +1,32 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { useDropzone, FileRejection, DropEvent } from 'react-dropzone'
 import { motion } from 'framer-motion'
 import { TextUploaderProps } from '../types'
+import { normalizeText, validateTypingText } from '../utils/textNormalizer'
 
 const TextUploader: React.FC<TextUploaderProps> = ({ onTextSubmit }) => {
-  const [text, setText] = useState<string>('')
+  const [rawText, setRawText] = useState<string>('')
 
-  const onDrop = useCallback((
-    acceptedFiles: File[], 
-    _fileRejections: FileRejection[], 
-    _event: DropEvent
-  ) => {
-    const file = acceptedFiles[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        const content = e.target?.result as string
-        setText(content)
-        onTextSubmit(content)
+  const validation = useMemo(() => validateTypingText(rawText), [rawText])
+  const normalizedText = useMemo(() => normalizeText(rawText), [rawText])
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[], _fileRejections: FileRejection[], _event: DropEvent) => {
+      const file = acceptedFiles[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = (e: ProgressEvent<FileReader>) => {
+          const content = e.target?.result as string
+          setRawText(content)
+          if (content.trim()) {
+            onTextSubmit(normalizeText(content))
+          }
+        }
+        reader.readAsText(file)
       }
-      reader.readAsText(file)
-    }
-  }, [onTextSubmit])
+    },
+    [onTextSubmit]
+  )
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -32,8 +37,15 @@ const TextUploader: React.FC<TextUploaderProps> = ({ onTextSubmit }) => {
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const newText = e.target.value
-    setText(newText)
-    onTextSubmit(newText)
+    setRawText(newText)
+    const timer = setTimeout(() => {
+      if (newText.trim()) {
+        onTextSubmit(normalizeText(newText))
+      } else {
+        onTextSubmit('')
+      }
+    }, 300)
+    return () => clearTimeout(timer)
   }
 
   return (
@@ -41,11 +53,41 @@ const TextUploader: React.FC<TextUploaderProps> = ({ onTextSubmit }) => {
       <div className="textarea-container">
         <textarea
           className="text-input"
-          value={text}
+          value={rawText}
           onChange={handleTextChange}
-          placeholder="Paste your text here or drag and drop a text file below..."
+          placeholder="Paste your text here... Special characters will be automatically normalized"
           spellCheck={false}
+          rows={6}
         />
+
+        {normalizedText && (
+          <div
+            style={{
+              fontSize: '0.85rem',
+              marginTop: '0.5rem',
+              padding: '0.75rem',
+              background: validation.isValid
+                ? 'rgba(16,185,129,0.1)'
+                : 'rgba(239,68,68,0.1)',
+              borderRadius: '0.5rem',
+              borderLeft: `4px solid ${
+                validation.isValid ? '#10b981' : '#ef4444'
+              }`,
+              fontFamily: 'JetBrains Mono, monospace'
+            }}
+          >
+            📝 {validation.message}
+            {normalizedText !== rawText.trim() && (
+              <>
+                {' → '}
+                <span style={{ color: '#6366f1' }}>
+                  {normalizedText.slice(0, 40)}
+                  {normalizedText.length > 40 ? '...' : ''}
+                </span>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       <motion.div
@@ -59,7 +101,7 @@ const TextUploader: React.FC<TextUploaderProps> = ({ onTextSubmit }) => {
         {isDragActive ? (
           <p>Drop your text file here...</p>
         ) : (
-          <p>Drag and drop a text file here, or click to select</p>
+          <p>Or drag & drop a .txt file (will be automatically normalized)</p>
         )}
       </motion.div>
     </div>

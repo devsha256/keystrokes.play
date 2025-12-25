@@ -6,9 +6,17 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
+      // API proxy
       '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+        secure: false
+      },
+      // Static files - DO NOT proxy /books
+      '/books': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+        secure: false
       }
     }
   }
